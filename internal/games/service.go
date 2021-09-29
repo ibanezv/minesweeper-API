@@ -33,7 +33,7 @@ func (g *ProcessGame) FindGame(ctx context.Context, ID int64) (models.Game, erro
 		return models.Game{}, err
 	}
 
-	game := transform(dbGame)
+	game := Transform(dbGame)
 	return game, nil
 }
 
@@ -59,14 +59,14 @@ func (g *ProcessGame) CreateGame(ctx context.Context, game models.Game) (models.
 			}
 		}
 	}
-	return transform(newGame), nil
+	return Transform(newGame), nil
 }
 
 func validationData(game models.Game) bool {
 	return game.CountRows >= 4 && game.CountCols >= 4 && game.CountMines > 0
 }
 
-func transform(dbGame repository.Games) models.Game {
+func Transform(dbGame repository.Games) models.Game {
 	var game models.Game
 	game.ID = int64(dbGame.ID)
 	game.CountRows = dbGame.CountRows

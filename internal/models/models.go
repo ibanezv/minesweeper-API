@@ -18,11 +18,12 @@ type Distribution struct {
 }
 
 type User struct {
-	ID       int64  `json:"id"`
-	NickName string `json:"nick_name"`
+	ID        int    `json:"id"`
+	NickName  string `json:"nick_name"`
+	AccountID int    `json:"account_id"`
 }
 
 type Accounts struct {
-	ID     int64 `json:"id"`
-	UserID int64 `json:"user_id"`
+	ID    int    `json:"id"`
+	Email string `json:"email"`
 }

@@ -10,8 +10,9 @@ type Games struct {
 }
 
 type Users struct {
-	ID       uint   `gorm:"primarykey;autoIncrement:true;not null"`
-	NickName string `gorm:"not null"`
+	ID        uint   `gorm:"primarykey;autoIncrement:true;not null"`
+	NickName  string `gorm:"not null"`
+	AccountID int    `gorm:"not null"`
 }
 
 type Distributions struct {
@@ -20,4 +21,9 @@ type Distributions struct {
 	ColNumber int    `gorm:"primaryKey;autoIncrement:false"`
 	Value     string `gorm:"default:null"`
 	State     string `gorm:"default:null"`
+}
+
+type Accounts struct {
+	ID    uint   `gorm:"primarykey;autoIncrement:true;not null"`
+	Email string `gorm:"not null"`
 }

@@ -3,9 +3,11 @@ package main
 import (
 	"github/ibanezv/minesweeper-API/cmd/api/handlers"
 	"github/ibanezv/minesweeper-API/cmd/api/settings"
+	"github/ibanezv/minesweeper-API/internal/accounts"
 	"github/ibanezv/minesweeper-API/internal/distributions"
 	"github/ibanezv/minesweeper-API/internal/games"
 	"github/ibanezv/minesweeper-API/internal/repository"
+	"github/ibanezv/minesweeper-API/internal/users"
 	"github/ibanezv/minesweeper-API/pkg/database"
 )
 
@@ -18,6 +20,8 @@ func main() {
 
 	serviceDistributions := distributions.NewService(minesweeperDao)
 	serviceGames := games.NewService(minesweeperDao, serviceDistributions)
+	serviceUsers := users.NewService(minesweeperDao)
+	serviceAccounts := accounts.NewService(minesweeperDao)
 
-	handlers.ApiRoutesMapper(serviceGames, serviceDistributions)
+	handlers.ApiRoutesMapper(serviceGames, serviceDistributions, serviceUsers, serviceAccounts)
 }

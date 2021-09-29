@@ -22,8 +22,7 @@ type Db struct {
 	openConnection func(connectionConfig string, opts gorm.Option) (db *gorm.DB, err error)
 }
 
-func NewDatabase(configs settings.ConfigFile) Db {
-	dbConfig := configs.Database
+func NewDatabase(dbConfig settings.Database) Db {
 	return Db{
 		config: dbConfig,
 		openConnection: func(connectionConfig string, cfg gorm.Option) (db *gorm.DB, err error) {

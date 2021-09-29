@@ -15,6 +15,12 @@ type IGames interface {
 	UpdateDistributionCell(ctx context.Context, dbDistribution Distributions) (Distributions, error)
 	CreateDistribution(ctx context.Context, dbDistribution Distributions) (Distributions, error)
 	GetDistributionCellSelected(ctx context.Context, gameID int64, state string, notValue string) (int, error)
+	GetUserById(ctx context.Context, ID int) (Users, error)
+	CreateUser(ctx context.Context, user Users) (Users, error)
+	GetUserGames(ctx context.Context, ID int) ([]Games, error)
+	GetAccountById(ctx context.Context, ID int) (Accounts, error)
+	CreateAccount(ctx context.Context, accountDb Accounts) (Accounts, error)
+	GetAccountUsers(ctx context.Context, ID int) ([]Users, error)
 }
 
 type Dao struct {
@@ -73,4 +79,38 @@ func (dao Dao) UpdateDistributionCell(ctx context.Context, dbDistribution Distri
 func (dao Dao) CreateDistribution(ctx context.Context, dbDistribution Distributions) (Distributions, error) {
 	result := dao.DB.Create(&dbDistribution)
 	return dbDistribution, result.Error
+}
+
+func (dao Dao) GetUserById(ctx context.Context, ID int) (Users, error) {
+	userDb := Users{}
+	result := dao.DB.Table("users").Where("id=?", ID).First(&userDb)
+	return userDb, result.Error
+}
+
+func (dao Dao) CreateUser(ctx context.Context, user Users) (Users, error) {
+	result := dao.DB.Create(&user)
+	return user, result.Error
+}
+
+func (dao Dao) GetUserGames(ctx context.Context, ID int) ([]Games, error) {
+	userGames := []Games{}
+	result := dao.DB.Table("games").Where("user_id=?", ID).Find(&userGames)
+	return userGames, result.Error
+}
+
+func (dao Dao) GetAccountById(ctx context.Context, ID int) (Accounts, error) {
+	accountDb := Accounts{}
+	result := dao.DB.Table("accounts").Where("id=?", ID).First(&accountDb)
+	return accountDb, result.Error
+}
+
+func (dao Dao) CreateAccount(ctx context.Context, accountDb Accounts) (Accounts, error) {
+	result := dao.DB.Create(&accountDb)
+	return accountDb, result.Error
+}
+
+func (dao Dao) GetAccountUsers(ctx context.Context, ID int) ([]Users, error) {
+	accountUsers := []Users{}
+	result := dao.DB.Table("users").Where("account_id=?", ID).Find(&accountUsers)
+	return accountUsers, result.Error
 }
