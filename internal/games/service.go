@@ -9,6 +9,12 @@ import (
 	"github/ibanezv/minesweeper-API/pkg/database"
 )
 
+const (
+	GameStateInProgres = "in_progress"
+	GameStatePaused    = "paused"
+	GameStateOver      = "over"
+)
+
 var ErrGameNotFound = errors.New("game not found")
 var ErrGameBadRequest = errors.New("game data error")
 
@@ -43,6 +49,7 @@ func (g *ProcessGame) CreateGame(ctx context.Context, game models.Game) (models.
 	}
 
 	distribution := g.distributionsService.CreateDistribution(ctx, game.CountRows, game.CountCols, game.CountMines)
+	game.State = GameStateInProgres
 	dbGame := transformToDB(game)
 	newGame, err := g.repositories.CreateGame(ctx, dbGame)
 	if err != nil {

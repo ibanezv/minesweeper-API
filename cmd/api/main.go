@@ -9,6 +9,7 @@ import (
 	"github/ibanezv/minesweeper-API/internal/repository"
 	"github/ibanezv/minesweeper-API/internal/users"
 	"github/ibanezv/minesweeper-API/pkg/database"
+	"net/http"
 )
 
 func main() {
@@ -23,5 +24,7 @@ func main() {
 	serviceUsers := users.NewService(minesweeperDao)
 	serviceAccounts := accounts.NewService(minesweeperDao)
 
-	handlers.ApiRoutesMapper(serviceGames, serviceDistributions, serviceUsers, serviceAccounts)
+	router := handlers.ApiRoutesMapper(serviceGames, serviceDistributions, serviceUsers, serviceAccounts)
+	http.Handle("/", router)
+	_ = http.ListenAndServe(":8090", nil)
 }

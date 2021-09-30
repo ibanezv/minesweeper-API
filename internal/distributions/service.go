@@ -32,7 +32,7 @@ type Service interface {
 	UpdateCellDistribution(context.Context, models.Distribution) (bool, error)
 	CreateDistribution(context.Context, int, int, int) [][]models.Distribution
 	AddDistribution(context.Context, models.Distribution) (models.Distribution, error)
-	validateCompleteDistribution(context.Context, repository.Games) (bool, error)
+	ValidateCompleteDistribution(context.Context, repository.Games) (bool, error)
 }
 
 type ProcessDistribution struct {
@@ -127,7 +127,10 @@ func (d *ProcessDistribution) UpdateCellDistribution(ctx context.Context, distri
 
 	if checkIfMine(arr, distribution) {
 		game.State = StateGameOver
-		d.repositories.UpdateGame(ctx, game)
+		_, err = d.repositories.UpdateGame(ctx, game)
+		if err != nil {
+			return false, err
+		}
 		return false, ErrMine
 	}
 
@@ -137,8 +140,8 @@ func (d *ProcessDistribution) UpdateCellDistribution(ctx context.Context, distri
 		arr = selectCell(ctx, arr, distribution.RowNumber, distribution.ColNumber)
 	}
 
-	for i, _ := range arr {
-		for j, _ := range arr[i] {
+	for i := range arr {
+		for j := range arr[i] {
 			_, err := d.repositories.UpdateDistributionCell(ctx, arr[i][j])
 			if err != nil {
 				return false, err
@@ -146,7 +149,7 @@ func (d *ProcessDistribution) UpdateCellDistribution(ctx context.Context, distri
 		}
 	}
 
-	isComplete, err := d.validateCompleteDistribution(ctx, game)
+	isComplete, err := d.ValidateCompleteDistribution(ctx, game)
 	if err != nil {
 		return false, err
 	}
@@ -157,7 +160,7 @@ func (d *ProcessDistribution) UpdateCellDistribution(ctx context.Context, distri
 	return false, nil
 }
 
-func (d *ProcessDistribution) validateCompleteDistribution(ctx context.Context, game repository.Games) (bool, error) {
+func (d *ProcessDistribution) ValidateCompleteDistribution(ctx context.Context, game repository.Games) (bool, error) {
 	countSelected, err := d.repositories.GetDistributionCellSelected(ctx, game.ID, CellStateShowed, CellValueMine)
 	if err != nil {
 		return false, err

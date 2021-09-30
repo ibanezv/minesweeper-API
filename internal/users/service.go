@@ -25,7 +25,7 @@ func NewService(repositories database.Repositories) *ProcessUser {
 func (u *ProcessUser) FindUser(ctx context.Context, ID int) (models.User, error) {
 	user, err := u.repositories.GetUserById(ctx, ID)
 	if err != nil {
-		return models.User{}, nil
+		return models.User{}, err
 	}
 	return Transform(user), nil
 }

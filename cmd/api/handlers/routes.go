@@ -11,7 +11,7 @@ import (
 )
 
 func ApiRoutesMapper(gamesService games.Service, distributionsService distributions.Service,
-	usersService users.Service, accountsService accounts.Service) {
+	usersService users.Service, accountsService accounts.Service) *mux.Router {
 	r := mux.NewRouter()
 	gamesHandler := NewHandlerGames(gamesService)
 	distributionsHandler := NewHandlerDistributions(distributionsService)
@@ -27,6 +27,5 @@ func ApiRoutesMapper(gamesService games.Service, distributionsService distributi
 	r.HandleFunc("/accounts/{id}", accountHandler.GetAccount).Methods(http.MethodGet)
 	r.HandleFunc("/accounts", accountHandler.PostAccount).Methods(http.MethodPost)
 	r.HandleFunc("/accounts/{id}/users", accountHandler.GetAccountsUser).Methods(http.MethodGet)
-	http.Handle("/", r)
-	_ = http.ListenAndServe(":8090", nil)
+	return r
 }
