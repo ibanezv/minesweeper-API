@@ -19,7 +19,7 @@ func LoadConfigurationDB() Database {
 	config := Database{}
 	config.DatabaseName = "minesweeper"
 	config.Host = "localhost:3306"
-	config.Password = "lofaca973"
-	config.Username = "root"
+	config.Password = ""
+	config.Username = ""
 	return config
 }
