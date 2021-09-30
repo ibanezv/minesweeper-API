@@ -1,7 +1,7 @@
 # minesweeper-API
 ![technology Go](https://img.shields.io/badge/go-1.16+-blue.svg)
 
-This application is a API Restful .
+This application is a API Restful wich gives endpoints to handle minesweeper game.
 
 ## Architecture 
 This [document](docs/guide/ARCHITECTURE.md) includes all scopes and its roles with a brief of it purpose.
