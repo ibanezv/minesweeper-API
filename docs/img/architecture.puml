@@ -1,0 +1,58 @@
+@startuml API Minesweeper Arquitecture
+allow_mixing
+
+skinparam title {
+
+}
+
+package "Minesweeper" as Minesweeper #E0F2F7 {
+    frame "API" as Minesweeper.API   #DDDDDD {
+        component "Games Handler" as Minesweeper.API.Games
+        component "Distributions Handler" as Minesweeper.API.Distributions
+        component "Users Handler" as Minesweeper.API.Users
+        component "Accounts Handler" as Minesweeper.API.Accounts
+    }
+   
+}
+
+package "Games" as Games #E0F2F7 {
+    frame "Service" as Games.Service   #DDDDDD {
+        component "Games Service" as Games.Service.Games
+    }
+    Minesweeper.API.Games -down-> Games.Service.Games
+}
+
+package "Distributions" as Distributions #E0F2F7 {
+    frame "Service" as Distributions.Service   #DDDDDD {
+        component "Distributions Service" as Distributions.Service.Distributions
+    }
+    Minesweeper.API.Distributions -down-> Distributions.Service.Distributions
+}
+
+
+package "Users" as Users #E0F2F7 {
+    frame "Service" as Users.Service   #DDDDDD {
+        component "Users Service" as Users.Service.Users
+    }
+    Minesweeper.API.Users -down-> Users.Service.Users
+}
+
+package "Accounts" as Accounts #E0F2F7 {
+    frame "Service" as Accounts.Service   #DDDDDD {
+        component "Accounts Service" as Accounts.Service.Accounts
+    }
+   Minesweeper.API.Accounts -down-> Accounts.Service.Accounts
+}
+
+database "minesweeper" as MysqlMinesweeper #DDDDDD {
+    component "Games" as MysqlMinesweeper.Games
+    component "Distributions" as MysqlMinesweeper.Distributions
+    component "Users" as MysqlMinesweeper.Users
+    component "Accounts" as MysqlMinesweeper.Accounts
+}
+Games -down-> MysqlMinesweeper
+Distributions -down-> MysqlMinesweeper
+Users -down-> MysqlMinesweeper
+Accounts -down-> MysqlMinesweeper
+
+@enduml

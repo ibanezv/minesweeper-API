@@ -1,3 +1,4 @@
+//Package Distributions gives methods to handle grid mines distributions
 package distributions
 
 import (

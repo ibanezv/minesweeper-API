@@ -1,3 +1,4 @@
+//Package Users gives functions to handle gamers data.
 package users
 
 import (

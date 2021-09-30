@@ -1,0 +1,33 @@
+@startuml minesweeper Tables
+
+class Games {
+	+ ID uint
+	+ user_id uint
+	+ count_Rows uint
+	+ count_Cols uint
+	+ count_Mines uint
+	+ state string
+
+}
+
+class Distributions {
+	+ game_id uint
+	+ row_number uint
+	+ col_number uint
+	+ value string
+	+ state string
+}
+
+class Users {
+	+ ID uint
+	+ nick_name string
+	+ account_id uint
+
+}
+
+class Accounts {
+	+ ID uint
+	+ email string
+}
+
+@enduml

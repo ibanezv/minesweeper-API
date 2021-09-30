@@ -1,3 +1,4 @@
+// Package Accounts gives methods to handle accounts of gamers
 package accounts
 
 import (

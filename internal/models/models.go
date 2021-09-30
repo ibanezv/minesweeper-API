@@ -1,3 +1,4 @@
+// Package Models contains models of project
 package models
 
 type Game struct {

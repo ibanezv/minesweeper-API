@@ -1,3 +1,4 @@
+// Package Games gives methods to handle intances games of minesweeper
 package games
 
 import (
